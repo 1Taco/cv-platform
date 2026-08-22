@@ -4,19 +4,20 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { JobsModule } from './jobs/jobs.module';
 import { CvModule } from './cv/cv.module';
-import { TypeOrmModule } from '@nestjs/typeorm/dist/typeorm.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'jobmatcher',
-      autoLoadEntities: true,
-      synchronize: true,
+    ConfigModule.forRoot({ isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        type: 'postgres',
+        url: config.get<string>('DATABASE_URL'),
+        autoLoadEntities: true,
+        synchronize: true,
+      }),
     }),
     UsersModule,
     JobsModule,
