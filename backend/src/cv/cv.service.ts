@@ -7,8 +7,6 @@ const { PDFParse } = require('pdf-parse');
 @Injectable()
 export class CvService {
   async extractText(file: Express.Multer.File): Promise<string> {
-    console.log('Received mimetype:', file.mimetype);
-    console.log('Original filename:', file.originalname);
     if (file.mimetype === 'application/pdf') {
       const parser = new PDFParse({ data: file.buffer });
       try {
