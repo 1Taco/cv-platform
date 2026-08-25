@@ -52,10 +52,8 @@ Use this exact shape:
   "fullName": "string",
   "email": "string",
   "phone": "string",
-  "location": "string", (add country if it isin't mentioned e.g. "City, Country")
-  "jobTitles": ["string"], 
-  "skills": ["string"], 
-  "yearsOfExperience": number,
+  "location": "string", (add country if it isin't mentioned e.g. "City, Country") 
+  "skills": ["string"],
   "education": [{ "degree": "string", "institution": "string", "year": "string" }],
   "workExperience": [{ "title": "string", "company": "string", "duration": "string", "description": "string" }],
   "languages": ["string"]
