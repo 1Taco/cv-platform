@@ -34,12 +34,14 @@ export class CvController {
     if (!file) {
       throw new BadRequestException('No file uploaded');
     }
-    const text = await this.cvService.extractText(file);
-    const parsedProfile = await this.cvService.parseWithAI(text);
-    // Here you can handle the uploaded file, e.g., save it to disk or process it
+
+    const cv = await this.cvService.processCv(file);
+
     return {
-      filename: file.originalname,
-      parsedProfile,
+      id: cv.id,
+      filename: cv.originalFilename,
+      parsedProfile: cv.parsedProfile,
+      uploadedAt: cv.uploadedAt,
     };
   }
 }

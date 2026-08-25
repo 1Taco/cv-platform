@@ -3,12 +3,17 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import mammoth from 'mammoth';
 import { GoogleGenAI } from '@google/genai';
 import { ConfigService } from '@nestjs/config';
-
+import { Cv } from './entities/cv.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 const { PDFParse } = require('pdf-parse');
 
 @Injectable()
 export class CvService {
-  constructor(private readonly configService: ConfigService) {}
+  constructor(
+    private readonly configService: ConfigService,
+    @InjectRepository(Cv) private readonly cvRepository: Repository<Cv>,
+  ) {}
   async extractText(file: Express.Multer.File): Promise<string> {
     if (file.mimetype === 'application/pdf') {
       const parser = new PDFParse({ data: file.buffer });
@@ -48,8 +53,8 @@ Use this exact shape:
   "email": "string",
   "phone": "string",
   "location": "string", (add country if it isin't mentioned e.g. "City, Country")
-  "jobTitles": ["string"],
-  "skills": ["string"],
+  "jobTitles": ["string"], 
+  "skills": ["string"], 
   "yearsOfExperience": number,
   "education": [{ "degree": "string", "institution": "string", "year": "string" }],
   "workExperience": [{ "title": "string", "company": "string", "duration": "string", "description": "string" }],
@@ -77,5 +82,17 @@ ${text}
     } catch {
       throw new Error('Failed to parse AI response as JSON');
     }
+  }
+  async processCv(file: Express.Multer.File): Promise<Cv> {
+    const rawText = await this.extractText(file);
+    const parsedProfile = await this.parseWithAI(rawText);
+
+    const cv = this.cvRepository.create({
+      originalFilename: file.originalname,
+      rawText,
+      parsedProfile,
+    });
+
+    return this.cvRepository.save(cv);
   }
 }
