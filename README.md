@@ -1,5 +1,7 @@
 # CV Platform
 
+> **Note:** Most recent development is currently available on the `branch-name` branch.
+> 
 > **Work in progress — development temporarily paused**
 >
 > CV Platform is an unfinished full-stack job-matching application for the Lithuanian job market. The project is being developed with a React frontend and a NestJS backend, using PostgreSQL and TypeORM for persistent data storage, and Google Gemini for AI-powered CV parsing.
