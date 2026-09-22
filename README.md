@@ -1,6 +1,6 @@
 # CV Platform
 
-> **Note:** Most recent development is currently available on the `branch-name` branch.
+> **Note:** Most recent development is currently available on the `feature/cv-ai-parsing` branch.
 > 
 > **Work in progress — development temporarily paused**
 >
