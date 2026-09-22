@@ -197,10 +197,6 @@ API routes for users, authentication, real job data, and matching are planned bu
 - Gemini's free tier is rate-limited and can occasionally return transient `503` errors under load; the CV parsing service retries these automatically with exponential backoff.
 - The application is not production-ready and APIs, database models, and project structure may change.
 
-## Contributing
-
-Contributions and ideas are welcome while the project is being developed. For substantial changes, open an issue first to discuss the proposed approach. Please include tests and update this README when setup or behavior changes.
-
 ## License
 
 No license has been selected for this project yet.
